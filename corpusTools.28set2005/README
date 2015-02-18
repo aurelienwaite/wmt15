@@ -1,0 +1,101 @@
+There is a Makefile in this directory, after setting the required 
+parameters, it creates a post-processed version of the corpus. The 
+parameters are:
+
+corpusName: the name of input bilingual corpus
+BASENAME: the base name for the output files
+toolDIR: the path to the tools directory, e.g. /u/tcstar/bin, 
+where the Makefile is
+
+	/u/tcstar/bin |
+		      |
+		      --- src
+		      |
+		      --- intel
+		      |
+		      Makefile
+		      deleteCategs
+		      .
+		      .
+		      .
+
+
+
+Don't forget to change the *.tokmap files appropriately. These files make 
+use of some other files (regular expressions) which has been explicitly 
+mentioned in the bottom of the files.
+
+
+A brief description of released tools: 
+
+splitBiCorpus.prl:
+------------------
+It extracts source or target corpus from a bilingual corpus in RWTH format.
+Usage: - | splitBiCorpus.prl n
+  n : it is 0 or 1 to show that which of source or target corpus,
+      respectively,should be extracted.
+Input: a bilingual corpus in RWTH format through stdin
+Output: source or target corpus to stdout
+Example: 'less EnDe | splitBiCorpus.prl 0 > En'
+
+
+Scripts for splitting a given corpus:
+-------------------------------------
+Example: 'cat EnEs | gawk 'BEGIN{FS=" # "} { print $1}' > En'
+         'cat EnEs | gawk 'BEGIN{FS=" # "} { print $2}' > Es'
+
+
+simplifyText:
+-------------
+It removes additional spaces from input text.
+Usage: - | simplifyText
+
+
+corpusStat:
+-----------
+It generates the statistics for the given corpora.
+Usage: corpusStat f.train e.train [f-dev] [e-dev] [f-test] [e-test]
+
+
+deleteCategs:
+-------------
+It removes all category information from the corpus. For example it converts
+'including the E _NUMBER { 66 } _PNOUN { Fortezza }' to 'including the E 66
+Fortezza'
+Usage: - | deleteCategs
+Input: stdin
+Output: stdout
+Example: 'less En | deleteCategs > En.org'
+
+
+deleteParens:
+-------------
+It removes all parentheses ('{','}') and their enclosing contents from the corpus.
+For example it converts '( including the E _NUMBER { 66 } _PNOUN { Fortezza } )'
+to '( including the E _NUMBER _PNOUN )'
+Usage: - | deleteParens
+Input: stdin
+Output: stdout
+Example: 'cat En | deleteParens > En.clean'
+
+
+makeVocabulary:
+---------------
+It accepts the tokenized text from stdin, then produces the vocabulary of input
+text and prints them to stdout.
+Usage: - | makeVocabulary
+Example: 'cat De | deleteParens | makeVocabulary > De.voc'
+
+
+applyTokenizer:
+--------------
+It tokenizes the input-raw text from stdin. Along with this program there are
+two specification file for Spanish and English languages, they are 'en.tokmap', 
+and 'es.tokmap'.
+
+Usage: - | applyTokenizer SpecFile
+  SpecFile is one of above aforementioned specification files.
+Input:   stdin
+Output:  the tokenized text to stdout
+Example: 'cat fr00110.txt | applyTokenizer fr.tokmap > en00110.txt.tok'
+

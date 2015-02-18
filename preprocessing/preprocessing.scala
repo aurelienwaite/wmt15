@@ -2,7 +2,8 @@
 L=`readlink -f $0`
 L=`dirname $L`/target/universal/stage/lib
 cp=`echo $L/*.jar|sed 's/ /:/g'`  #*/
-exec /home/blue7/aaw35/libs/scala-2.11.5/bin/scala -classpath $cp $0 $@
+export LD_LIBRARY_PATH=/home/blue9/aaw35/wmt13/lib
+exec /home/blue7/aaw35/libs/scala-2.11.5/bin/scala -J-Xmx10000m -classpath $cp $0 $@
 !#
 
 import org.apache.spark.SparkContext
@@ -10,20 +11,15 @@ import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 import java.io._
 import java.util._
+import scala.io.Source
 
 
-
-val conf = new SparkConf().setMaster("local[1]").setAppName("Simple Application")
+val conf = new SparkConf().setMaster("local[10]").setAppName("Simple Application")
 val sc = new SparkContext(conf)
 
-def convertHadoop(path : String) = {
-	sc.hadoopFile(path, classOf[TextInputFormat], classOf[LongWritable], classOf[Text],
-      minPartitions).map(pair => (pair._1, pair._2.toString))
-}
-
-val en = sc.textFile("/data/mifs_scratch/mh693/wmt15/data/parallel/fr_en/commoncrawl.fr-en.en")
-val fr = sc.textFile("/data/mifs_scratch/mh693/wmt15/data/parallel/fr_en/commoncrawl.fr-en.fr")
-val joined = en.join(fr)
+val en = Source.fromFile("/data/mifs_scratch/mh693/wmt15/data/parallel/fr_en/commoncrawl.fr-en.en", "UTF-8")
+val fr = Source.fromFile("/data/mifs_scratch/mh693/wmt15/data/parallel/fr_en/commoncrawl.fr-en.fr", "UTF-8")
+val joined = sc.parallelize((en.getLines zip fr.getLines).toStream,100)
 val preprocessed = joined.mapPartitions{iter => 
 	{
 
@@ -54,8 +50,8 @@ val preprocessed = joined.mapPartitions{iter =>
    				}
 			}
 		}
-		lazy val enTokeniser = new PipedFunc("/home/blue9/jmp84/exps/wmt10/corpusTools.28set2005/intel/applyTokenizer /home/blue9/jmp84/exps/wmt10/corpusTools.28set2005/en.tokmap")
-		lazy val frTokeniser = new PipedFunc("/home/blue7/aaw35/tools/wmt15/perl_scripts/tokenizer-fr.perl -l fr")
+		val enTokeniser = new PipedFunc("/home/blue7/aaw35/tools/wmt15/corpusTools.28set2005/intel/applyTokenizer /home/blue7/aaw35/tools/wmt15/corpusTools.28set2005/en.tokmap")
+		val frTokeniser = new PipedFunc("/home/blue7/aaw35/tools/wmt15/perl_scripts/tokenizer-fr.perl -l fr")
 		iter.flatMap{ elem => 
 			val (enLine, frLine) = elem
 			val enTok = enTokeniser(enLine)
