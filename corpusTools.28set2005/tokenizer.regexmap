@@ -1,0 +1,45 @@
+:\([^\]\)#:$1\#:
+#_TAG { \([^{}]\+\) }#$1#
+#_TAG##
+#_NUMBER { \([^{}]\{1,25\}[[:digit:]]\)\. } \([[:upper:]]\)#_NUMNBER { $1 } . $2#
+#!!#! !#
+#!!#! !#
+#\.\{4,\}#....#
+#\([[:graph:]]\)\(-+\) #$1 $2 #
+#\([[:graph:]]\)\(-\) #$1 $2 #
+# \(-\)\([[:graph:]]\)# $1 $2#
+# \(-+\)\([[:graph:]]\)# $1 $2#
+#''#' '#
+#^'# '#
+# '\([^']\)# ' $1#
+#\([^']\)' #$1 ' #
+#'\([sSmMdD]\) # '$1 #
+#'\(ll\|LL\) # '$1 #
+#'\(re\|RE\) # '$1 #
+#'\(ve\|VE\) # '$1 #
+#\(w\|W\)on't #$1ill not #
+#\(c\|C\)an't #$1an not #
+#\(can\|Can\|CAN\)\(not\|NOT\) #$1 $2 #
+#\(n't\|N'T\) # not #
+# \([cÁdjlmnstC«DJLMNST]\|[jJ]usqu\|[lL]orsqu\|[pP]uisqu\|[pP]resqu\|[qQ]u\|[qQ]uoiqu\)'\([[:graph:]ÈË·ËÔ…»¡¿œ]\)# $1' $2#
+#^\([cÁdjlmnstC«DJLMNST]\|[jJ]usqu\|[lL]orsqu\|[pP]uisqu\|[pP]resqu\|[qQ]u\|[qQ]uoiqu\)'\([[:graph:]ÈË·ËÔ…»¡¿œ]\)# $1' $2#
+# \([dD]'\) \(ailleurs\|autant\|emblÈe\|arrache-pied\|antan\) # $1$2 ##
+# \([cC]'\) \(est-‡-dire\) # $1$2 #
+# \([cC]'\) \(est\) # $1$2 ##
+# \([dD]'\) \(abord\|aile\|aprËs\|aucuns\|aujourd'hui\|autre\|aventure\|entre\|habitude\|ici\|oeil\|ordinaire\|ores\|un\) # $1$2 #
+# \([jJ]usqu'\) \(au-boutisme\|au-boutismes\|au-boutiste\|au-boutistes\|amiable\|Èvidence\) # $1$2 #
+# \([lL]'\) \(accoutumÈe\|arriËre\|avance\|avant\|avenant\|aveuglette\|eau\) # $1$2 #
+# \([lL]'\) \(Ègard\|emporte-piËce\|encan\|encontre\|envers\|envi\|Ètranger\|heure\|immÈdiat\) # $1$2 #
+# \([lL]'\) \(improviste\|instar\|insu\|inverse\|on\|opposÈ\|ordinaire\|un\|une\|unisson\) # $1$2 #
+# \([mM]'\) \(as-tu-vu\) # $1$2 #
+# \([nN]'\) \(est\|importe\) # $1$2 #
+# \([pP]resqu'\) \(Óle\|Óles\) # $1$2 #
+# \([qQ]u'\) \(en-dira-t-on\|est-ce\|il\) # $1$2 #
+# \([sS]'\) \(agissant\|en\|il\) / $1$2 #
+# \([dD]\) ' # $1' #
+# \([qQ]u\) ' # $1' #
+#∏##
+#{[[:space:]]\+}##
+#[[:space:]]\+# #
+#^[[:space:]]\+##
+#[[:space:]]\+$##

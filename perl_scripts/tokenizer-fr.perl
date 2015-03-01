@@ -1,9 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w -CSD
 
 # Sample Tokenizer
 # written by Josh Schroeder, based on code by Philipp Koehn
-
-$|=1;
 
 binmode(STDIN, ":utf8");
 binmode(STDOUT, ":utf8");

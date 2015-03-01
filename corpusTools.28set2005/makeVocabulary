@@ -1,0 +1,17 @@
+#!/bin/bash -e
+#
+#  Author: Richard Zens
+#
+#  $Id: makeVocabulary,v 1.1 2004/10/14 12:34:17 zens Exp $
+##############################################################################
+
+if [ "$1" == "-h" ] ; then
+	echo "usage of $0"
+	echo "create a vocabulary, read from stdin, write to stdout"
+	echo "output is sorted, format: word frequency"
+	echo ""
+	exit 0
+fi
+
+tr "[:blank:]" "\n" | gawk '{voc[$1]++;} END {for(word in voc) print word,voc[word];}' | sort
+

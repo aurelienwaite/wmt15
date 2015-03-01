@@ -1,0 +1,9 @@
+#\<\([[:graph:]]\+@[[:graph:]]\+\.[[:graph:]]\+\)\># _MAIL { $1 } #
+#\<\(\([[:graph:]]\+\.\(com\|net\|edu\|int\|org\|gov\|mil\|tv\)\([/\.][[:graph:]]\)*\)\|\([[:graph:]]\+\.\(htm\|HTM\|html\|HTML\|shtml\|SHTML\|shtm\|SHTM\)\)\|\(\(http://\|ftp://\|www\.\|HTTP://\|FTP://\|WWW\.\)[[:graph:]]\+\)\)\># _WWW { $1 } #
+#_MAIL[[:space:]]\+{[[:space:]]\+_WWW[[:space:]]\+{#_MAIL {#
+#}[[:space:]]\+}#}#
+# } / #/ } #
+#\(<[^<>]\+>\)# _TAG { $1 } #
+#[[:space:]]\+# #
+#^[[:space:]]\+##
+#[[:space:]]\+$##

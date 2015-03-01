@@ -1,0 +1,6 @@
+#WMT Ignore
+*~
+.fuse_hidden*
+logs
+target
+._*

@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+if [ "$1" == "-h" ] ; then
+
+    echo "usage: $0 [category]"
+    echo ""
+    echo "delete categorization"
+    echo "input from stdin, output to stdout"
+    echo ""
+    echo "  if argument given, delete only this category"
+    echo "  default: delete all categories"
+    echo ""
+    exit 1
+fi
+
+if [ "$1" == "" ] ; then
+    sed "s#[^[:blank:]]*[[:blank:]]*{##g" | tr -d "{}"
+else
+    sed "s#$1[[:blank:]]*{\([^}]*\)}#\1#g" | tr -s " "
+fi
+
+
+exit 0
